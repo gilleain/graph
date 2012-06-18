@@ -280,7 +280,7 @@ public class Graph {
     }
     
     public List<Integer> getConnected(int vertexIndex) {
-        Map<Integer, List<Integer>> connectionTable = getConnectionTable();
+        Map<Integer, List<Integer>> connectionTable = calculateConnectionTable();
         return connectionTable.get(vertexIndex);
     }
     
@@ -364,7 +364,7 @@ public class Graph {
                 }
             }
         } catch (NullPointerException npe) {
-            System.out.println("ERR" + this);
+            System.out.println("ERR " + vertex + " " + visited + " " + table + " " + this);
         }
     }
     
