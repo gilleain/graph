@@ -649,5 +649,19 @@ public class Graph {
     public int vsize() {
         return getVertexCount();
     }
+
+	public String getEdgeStringWithEdgeOrder() {
+		String s = "[";
+		int counter = edges.size();
+		for (Edge e : edges) {
+			s += e.toSortedStringWithEdgeOrder();
+			if (counter > 1) {
+				s += ", ";
+			}
+			counter--;
+		}
+		s += "]";
+		return s;
+	}
     
 }
