@@ -58,4 +58,11 @@ public class VertexSignature extends AbstractVertexSignature {
         return (VertexSignature) graphSig.signatureForVertex(0);
     }
 
+    @Override
+    protected int convertEdgeLabelToColor(String label) {
+        if (label.equals("-")) return 1;
+        if (label.equals("=")) return 2;
+        else return 0;
+    }
+
 }
