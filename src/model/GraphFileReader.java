@@ -23,7 +23,11 @@ public class GraphFileReader implements Iterable<Graph> {
         this.fieldIndex = fieldIndex;
     }
 
-    public Iterator<Graph> iterator() {
+    public GraphFileReader(String string) throws FileNotFoundException {
+    	this(new FileReader(string));
+	}
+
+	public Iterator<Graph> iterator() {
         List<Graph> graphs = new ArrayList<Graph>();
         try {
             String line;

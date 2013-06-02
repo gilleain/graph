@@ -58,7 +58,7 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
 //        this.useVertexColorsInAut = useVertexColorsInAut;
     }
     
-    private void setup(Graph graph) {
+    public void setup(Graph graph) {
         if (checkForDisconnected) {
             connectionTable = makeCompactConnectionTable(graph);
         } else {

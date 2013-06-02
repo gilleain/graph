@@ -4,6 +4,7 @@ import group.Partition;
 import group.Permutation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,132 +19,7 @@ import java.util.Map;
  */
 public class Graph {
     
-    public class Edge implements Comparable<Edge> {
-        
-        public int a;
-        
-        public int b;
-        
-        public int o = 1;
-        
-        public Edge(int a, int b) {
-            this.a = a;
-            this.b = b;
-        }
-        
-        public Edge(int a, int b, int o) {
-            this(a, b);
-            this.o = o;
-        }
-        
-        public Edge(Edge e) {
-            this.a = e.a;
-            this.b = e.b;
-        }
-        
-        public Edge(String s) {
-        	String[] bits = s.split(":");
-        	this.a = Integer.parseInt(bits[0].trim());
-        	this.b = Integer.parseInt(bits[1].trim());
-        }
-        
-        public String getSortedPermutedColorOnlyString(int[] p, List<Integer> colors) {
-            int pa = p[this.a];
-            int pb = p[this.b];
-            int ca = colors.get(pa);
-            int cb = colors.get(pb);
-            if (ca < cb) {
-                return ca + ":" + cb;
-            } else {
-                return cb + ":" + ca;
-            }
-        }
-        
-        public String getSortedPermutedColoredString(int[] p, List<Integer> colors) {
-            int pa = p[this.a];
-            int pb = p[this.b];
-            if (pa < pb) {
-//                return pa + "(" + colors.get(pa) + "):" + pb + "(" + colors.get(pb) + ")";
-                return pa + "(" + colors.get(a) + "):" + pb + "(" + colors.get(b) + ")";
-            } else {
-//                return pb + "(" + colors.get(pb) + "):" + pa + "(" + colors.get(pa) + ")";
-                return pb + "(" + colors.get(b) + "):" + pa + "(" + colors.get(a) + ")";
-            }
-        }
-        
-        public String getSortedPermutedString(int[] p) {
-            int pa = p[this.a];
-            int pb = p[this.b];
-            if (pa < pb) {
-                return pa + ":" + pb;
-            } else {
-                return pb + ":" + pa;
-            }
-        }
-        
-        public String getPermutedString(int[] p) {
-            return p[this.a] + ":" + p[this.b];
-        }
-        
-        public String toSortedColorOnlyString(List<Integer> colors) {
-            int ca = colors.get(a);
-            int cb = colors.get(b);
-            if (ca < cb) {
-                return ca + ":" + cb;
-            } else {
-                return cb + ":" + ca;
-            }
-            
-        }
-        
-        public String toSortedColoredString(List<Integer> colors) {
-            if (a < b) {
-                return a + "(" + colors.get(a) + "):" + b + "(" + colors.get(b) + ")";
-            } else {
-                return b + "(" + colors.get(b) + "):" + a + "(" + colors.get(a) + ")";
-            }
-        }
-        
-        public String toSortedString() {
-            if (a < b) {
-                return a + ":" + b;
-            } else {
-                return b + ":" + a;
-            }
-        }
-        
-        public String toSortedStringWithEdgeOrder() {
-            if (a < b) {
-                return a + ":" + b + "(" + o + ")";
-            } else {
-                return b + ":" + a + "(" + o + ")";
-            }
-        }
-
-        public String toString() {
-            return this.a + ":" + this.b;
-        }
-
-        public int compareTo(Edge other) {
-            int tMin = (a < b)? a : b;
-            int tMax = (a < b)? b : a;
-            int oMin = (other.a < other.b)? other.a : other.b;
-            int oMax = (other.a < other.b)? other.b : other.a;
-            if (tMin < oMin || (tMin == oMin && tMax < oMax)) {
-                return -1;
-            } else {
-                if (tMin == oMin && tMax == oMax) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            }
-        }
-
-        public boolean adjacent(Edge other) {
-            return a == other.a || a == other.b || b == other.a || b == other.b;
-        }
-    }
+   
     
     public List<Edge> edges;
     
@@ -263,7 +139,11 @@ public class Graph {
     public void makeEdge(int a, int b) {
         Edge e = getEdge(a, b);
         if (e == null) {
-            this.edges.add(new Edge(a, b));
+        	if (a < b) {
+        		this.edges.add(new Edge(a, b));
+        	} else {
+        		this.edges.add(new Edge(b, a));
+        	}
         } else {
             e.o++;
         }
@@ -314,6 +194,37 @@ public class Graph {
         List<Integer> visited = new ArrayList<Integer>();
         dfs(0, visited, connectionTable);
         return visited.size() == this.getVertexCount();
+    }
+    
+    public List<List<Integer>> getComponents() {
+    	Map<Integer, List<Integer>> connectionTable = this.getConnectionTable();
+        BitSet visited = new BitSet();
+        List<List<Integer>> components = new ArrayList<List<Integer>>();
+        for (int i = 0; i < vsize(); i++) {
+        	if (visited.get(i)) {
+        		continue;
+        	} else {
+        		List<Integer> component = new ArrayList<Integer>();
+        		getComponent(i, connectionTable, visited, component);
+        		components.add(component);
+        	}
+        }
+        return components;
+    }
+    
+    private void getComponent(int vertex,
+    						  Map<Integer, List<Integer>> connectionTable, 
+    						  BitSet visited,
+    						  List<Integer> component) {
+    	component.add(vertex);
+    	visited.set(vertex);
+    	for (int neighbour : connectionTable.get(vertex)) {
+    		if (visited.get(neighbour)) {
+    			continue;
+    		} else {
+    			getComponent(neighbour, connectionTable, visited, component);
+    		}
+    	}
     }
     
     private Map<Integer, List<Integer>> calculateConnectionTable() {
@@ -538,6 +449,22 @@ public class Graph {
     public String toString() {
         return edges.toString();
     }
+    
+    public int[] degreeSequence(boolean sorted) {
+    	int[] degSeq = new int[vsize()];
+    	for (int i = 0; i < vsize(); i++) {
+    		degSeq[i] = degree(i);
+    	}
+    	if (sorted) {
+    		Arrays.sort(degSeq);
+    		int[] reversed = new int[vsize()];
+    		for (int i = vsize() - 1; i >= 0; i--) {
+    			reversed[i] = degSeq[vsize() - i - 1];
+    		}
+    		degSeq = reversed;
+    	}
+    	return degSeq;
+    }
 
     public int degree(int i) {
         int degree = 0;
@@ -662,6 +589,28 @@ public class Graph {
 		}
 		s += "]";
 		return s;
+	}
+
+	public Graph minus(int i) {
+		Graph h = new Graph();
+		for (Edge e : edges) {
+			if (e.a == i || e.b == i) {
+				continue;
+			} else {
+				int x = (e.a < i)? e.a : e.a - 1;
+				int y = (e.b < i)? e.b : e.b - 1;
+				h.makeEdge(x, y);
+			}
+		}
+		return h;
+	}
+
+	public Graph makeAll(List<Integer> listI, int j) {
+		Graph h = new Graph(this);
+		for (int i : listI) {
+			h.makeEdge(i, j);
+		}
+		return h;
 	}
     
 }
