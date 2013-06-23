@@ -1,14 +1,15 @@
-package test.group;
+package test.graph.group;
 
 import java.util.Arrays;
 
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
 import group.Partition;
 import group.Permutation;
 import group.SSPermutationGroup;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
 
 import org.junit.Test;
+
 
 public class CanonicalTests {
 	

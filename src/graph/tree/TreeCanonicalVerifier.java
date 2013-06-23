@@ -1,12 +1,12 @@
-package tree;
+package graph.tree;
 
+import graph.model.Graph;
 import group.Permutor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import model.Graph;
 
 /**
  * Verify a tree as canonical by taking all traversals from the root, and comparing the

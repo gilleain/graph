@@ -1,4 +1,4 @@
-package model;
+package graph.model;
 
 import signature.AbstractGraphSignature;
 import signature.AbstractVertexSignature;

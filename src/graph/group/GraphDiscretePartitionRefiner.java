@@ -1,4 +1,4 @@
-package model;
+package graph.group;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 
+
+import graph.model.Graph;
 import group.AbstractDiscretePartitionRefiner;
 import group.IEquitablePartitionRefiner;
 import group.Partition;

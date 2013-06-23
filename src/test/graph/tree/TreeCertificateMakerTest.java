@@ -1,11 +1,11 @@
-package test.tree;
+package test.graph.tree;
 
+import graph.model.Graph;
+import graph.tree.TreeCertificateMaker;
 import junit.framework.Assert;
-import model.Graph;
 
 import org.junit.Test;
 
-import tree.TreeCertificateMaker;
 
 public class TreeCertificateMakerTest {
 	

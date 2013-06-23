@@ -1,12 +1,13 @@
-package test.tree;
+package test.graph.tree;
+
+import graph.model.Graph;
+import graph.tree.TreeCanonicalVerifier;
 
 import java.util.Arrays;
 
-import model.Graph;
 
 import org.junit.Test;
 
-import tree.TreeCanonicalVerifier;
 
 public class TreeCanonicalVerifierTest {
 	

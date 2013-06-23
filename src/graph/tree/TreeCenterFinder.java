@@ -1,11 +1,12 @@
-package tree;
+package graph.tree;
+
+import graph.model.Graph;
 
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 import java.util.Map;
 
-import model.Graph;
 
 public class TreeCenterFinder {
 	

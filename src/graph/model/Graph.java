@@ -1,4 +1,4 @@
-package model;
+package graph.model;
 
 import group.Partition;
 import group.Permutation;

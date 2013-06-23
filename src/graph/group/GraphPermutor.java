@@ -1,6 +1,10 @@
-package model;
+package graph.group;
+
+import graph.model.Graph;
+import group.Permutor;
 
 import java.util.Iterator;
+
 
 public class GraphPermutor extends Permutor implements Iterator<Graph> {
     

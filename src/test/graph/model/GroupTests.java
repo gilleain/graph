@@ -1,5 +1,7 @@
-package test.model;
+package test.graph.model;
 
+import graph.group.GraphDiscretePartitionRefiner;
+import graph.model.Graph;
 import group.Permutation;
 import group.SSPermutationGroup;
 
@@ -8,10 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import junit.framework.Assert;
-import model.Graph;
-import model.GraphDiscretePartitionRefiner;
 
 import org.junit.Test;
+
 
 public class GroupTests {
     

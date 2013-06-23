@@ -1,16 +1,17 @@
-package test.tree;
+package test.graph.tree;
+
+import graph.model.Graph;
+import graph.model.GraphFileReader;
+import graph.tree.TreeCenterFinder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 
-import model.Graph;
-import model.GraphFileReader;
 
 import org.junit.Test;
 
-import tree.TreeCenterFinder;
 
 public class TreeCenterFinderTest {
 	

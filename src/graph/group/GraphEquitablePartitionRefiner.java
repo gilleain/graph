@@ -1,11 +1,13 @@
-package model;
+package graph.group;
 
+import graph.model.Graph;
 import group.AbstractEquitablePartitionRefiner;
 import group.IEquitablePartitionRefiner;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 
 /**
  * Implementation of an abstract equitable partition refiner for simple graphs.

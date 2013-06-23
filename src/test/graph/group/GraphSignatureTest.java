@@ -1,7 +1,7 @@
-package test.group;
+package test.graph.group;
 
-import model.Graph;
-import model.GraphSignature;
+import graph.model.Graph;
+import graph.model.GraphSignature;
 
 import org.junit.Test;
 
