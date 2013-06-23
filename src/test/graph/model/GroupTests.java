@@ -3,7 +3,7 @@ package test.graph.model;
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public class GroupTests {
         for (String cycleString : cycleStrings) {
             generators.add(Permutation.fromCycleString(cycleString, n));
         }
-        SSPermutationGroup group = new SSPermutationGroup(n, generators);
+        PermutationGroup group = new PermutationGroup(n, generators);
         int index = 0;
         for (Permutation p : group.all()) {
             System.out.println(index + "\t" + p + "\t" + p.toCycleString());
@@ -71,8 +71,8 @@ public class GroupTests {
 //    	Graph parent = new Graph("0:1,1:2");
 //    	Graph child = new Graph("0:1,0:2,1:3");
     	Graph child = new Graph("0:1,1:2");
-    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner(false, false);
-    	SSPermutationGroup group = childRefiner.getAutomorphismGroup(child);
+    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner(false);
+    	PermutationGroup group = childRefiner.getAutomorphismGroup(child);
     	for (Permutation p : group.all()) {
     		Graph pGraph = child.getPermutedGraph(p.getValues());
     		System.out.println(p + "\t" + pGraph.getSortedEdgeString());
@@ -84,8 +84,8 @@ public class GroupTests {
     	Graph X = new Graph("0:1,0:2,1:3,2:4");
     	Graph lX0 = new Graph("0:1,0:2,1:3,2:4,3:5");
     	Graph lX1 = new Graph("0:1,0:2,1:3,2:4,4:5");
-    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner(false, false);
-    	SSPermutationGroup group = childRefiner.getAutomorphismGroup(X);
+    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner(false);
+    	PermutationGroup group = childRefiner.getAutomorphismGroup(X);
     	for (Permutation p : group.all()) {
     		int[] pExp = new int[p.size() + 1];
     		System.arraycopy(p.getValues(), 0, pExp, 0, p.size());

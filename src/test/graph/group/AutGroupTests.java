@@ -4,31 +4,25 @@ import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
 import group.Partition;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import org.junit.Test;
 
 
 public class AutGroupTests {
     
-    public void makeAutG(Graph g, boolean useVertexColorsInAut) {
+    public void makeAutG(Graph g) {
         GraphDiscretePartitionRefiner refiner = 
-            new GraphDiscretePartitionRefiner(false, false, useVertexColorsInAut);
-        SSPermutationGroup autG = refiner.getAutomorphismGroup(g);
-        if (useVertexColorsInAut) {
-            System.out.println("with colors " + autG.order());
-        } else {
-            System.out.println("without colors " + autG.order());
-        }
+            new GraphDiscretePartitionRefiner(false);
+        PermutationGroup autG = refiner.getAutomorphismGroup(g);
         for (Permutation p : autG.all()) {
             System.out.println(p + "\t" + p.toCycleString());
         }
     }
     
     public void makeAutGWithInitialPartiton(Graph g, Partition initial) {
-        GraphDiscretePartitionRefiner refiner = 
-            new GraphDiscretePartitionRefiner(false, false, false);
-        SSPermutationGroup autG = refiner.getAutomorphismGroup(g, initial);
+        GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner(false);
+        PermutationGroup autG = refiner.getAutomorphismGroup(g, initial);
         System.out.println("size with partition " + initial + " = " + autG.order());
         for (Permutation p : autG.all()) {
             System.out.println(p + "\t" + p.toCycleString());
@@ -51,16 +45,16 @@ public class AutGroupTests {
     public void test4CycleWith2AlternatingColors() {
         Graph g = new Graph("0:1,0:3,1:2,2:3");
         g.setColors(0, 1, 0, 1);
-        makeAutG(g, true);
-        makeAutG(g, false);
+        // TODO : test with color partition!
+        makeAutG(g);
     }
     
     @Test
     public void test6CycleWith2AlternatingColors() {
         Graph g = new Graph("0:1,0:5,1:2,2:3,3:4,4:5");
         g.setColors(0, 1, 0, 1, 0, 1);
-        makeAutG(g, true);
-        makeAutG(g, false);
+        // TODO : test with color partition!
+        makeAutG(g);
     }
 
 }

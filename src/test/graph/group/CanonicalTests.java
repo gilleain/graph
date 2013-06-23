@@ -6,7 +6,7 @@ import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
 import group.Partition;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class CanonicalTests {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 //		boolean canonical = refiner.isCanonical(g, p);
 //		System.out.println(canonical);
-		SSPermutationGroup group = refiner.getAutomorphismGroup(g, p);
+		PermutationGroup group = refiner.getAutomorphismGroup(g, p);
 		for (Permutation perm : group.all()) {
 			System.out.println(perm);
 		}
@@ -48,7 +48,7 @@ public class CanonicalTests {
 		String initialBest = refiner.getHalfMatrixString();
 		System.out.println(initialBest);
 		
-		SSPermutationGroup symN = SSPermutationGroup.makeSymN(gA.vsize());
+		PermutationGroup symN = PermutationGroup.makeSymN(gA.vsize());
 		for (Permutation p : symN.all()) {
 			refiner = new GraphDiscretePartitionRefiner();
 			Graph gP = gA.getPermutedGraph(p);

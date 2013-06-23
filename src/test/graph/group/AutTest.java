@@ -3,7 +3,7 @@ package test.graph.group;
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.model.Graph;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import org.junit.Test;
 
@@ -39,7 +39,7 @@ public class AutTest {
 	public void nautyClawGraph() {
 		Graph graph = new Graph("0:3,1:3,2:3");
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-		SSPermutationGroup autG = refiner.getAutomorphismGroup(graph);
+		PermutationGroup autG = refiner.getAutomorphismGroup(graph);
 		for (Permutation p : autG.all()) {
 			String cert = refiner.getHalfMatrixString(p);
 			System.out.println(p + "\t" + cert + "\t" + graph.getPermutedGraph(p).getSortedEdgeString());
@@ -55,7 +55,7 @@ public class AutTest {
 	public void myClawGraph() {
 		Graph graph = new Graph("0:1,0:2,0:3");
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
-		SSPermutationGroup autG = refiner.getAutomorphismGroup(graph);
+		PermutationGroup autG = refiner.getAutomorphismGroup(graph);
 		for (Permutation p : autG.all()) {
 			String cert = refiner.getHalfMatrixString(p);
 			System.out.println(p + "\t" + cert + "\t" + graph.getPermutedGraph(p).getSortedEdgeString());

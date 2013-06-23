@@ -1,17 +1,18 @@
-package graph.model;
+package graph.group;
 
+import graph.model.Graph;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class TraversalBacktracker implements SSPermutationGroup.Backtracker {
+public class TraversalBacktracker implements PermutationGroup.Backtracker {
     
     private Graph graph;
     
-    private SSPermutationGroup aut;
+    private PermutationGroup aut;
     
     private List<Permutation> results;
     
@@ -25,7 +26,7 @@ public class TraversalBacktracker implements SSPermutationGroup.Backtracker {
     
     public TraversalBacktracker(
             String original, 
-            SSPermutationGroup symN, Graph g, SSPermutationGroup aut) {
+            PermutationGroup symN, Graph g, PermutationGroup aut) {
         this.graph = g;
         this.aut = aut;
         this.results = new ArrayList<Permutation>();

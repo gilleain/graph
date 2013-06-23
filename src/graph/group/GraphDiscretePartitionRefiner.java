@@ -12,7 +12,7 @@ import group.AbstractDiscretePartitionRefiner;
 import group.IEquitablePartitionRefiner;
 import group.Partition;
 import group.Permutation;
-import group.SSPermutationGroup;
+import group.PermutationGroup;
 
 
 /**
@@ -25,39 +25,16 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
     
     private Graph graph;
     
-    /**
-     * Use colors in the refinement to equitable partition 
-     */
-    private boolean useColorsInEquitable;
-    
-    /**
-     * Use vertex colors in generating automorphisms
-     */
-//    private boolean useVertexColorsInAut;	//TODO : remove?
-    
     private boolean checkForDisconnected;
     
     private Map<Integer, List<Integer>> connectionTable;
     
     public GraphDiscretePartitionRefiner() {
-        this(false, false, false);
+        this(false);
     }
     
-    public GraphDiscretePartitionRefiner(boolean useColorsInEquitable) {
-        this(useColorsInEquitable, false, false);
-    }
-    
-    public GraphDiscretePartitionRefiner(boolean useColorsInEquitable, boolean checkForDisconnected) {
-        this(useColorsInEquitable, checkForDisconnected, false);
-    }
-    
-    public GraphDiscretePartitionRefiner(boolean useColorsInEquitable, 
-                                         boolean checkForDisconnected, 
-                                         boolean useVertexColorsInAut) {
-        super(useVertexColorsInAut);
-        this.useColorsInEquitable = useColorsInEquitable;
+    public GraphDiscretePartitionRefiner(boolean checkForDisconnected) {
         this.checkForDisconnected = checkForDisconnected;
-//        this.useVertexColorsInAut = useVertexColorsInAut;
     }
     
     public void setup(Graph graph) {
@@ -68,22 +45,24 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
         }
         int n = graph.getVertexCount();
         this.graph = graph;
-        SSPermutationGroup group = new SSPermutationGroup(new Permutation(n));
-        IEquitablePartitionRefiner refiner = 
-            new GraphEquitablePartitionRefiner(graph, useColorsInEquitable, connectionTable);
+        PermutationGroup group = new PermutationGroup(new Permutation(n));
+        IEquitablePartitionRefiner refiner = new GraphEquitablePartitionRefiner(graph, connectionTable);
         setup(group, refiner);
     }
     
-    private void setup(Graph graph, SSPermutationGroup group) {
-        IEquitablePartitionRefiner refiner = 
-            new GraphEquitablePartitionRefiner(graph, useColorsInEquitable, connectionTable);
+    private void setup(Graph graph, PermutationGroup group) {
+        IEquitablePartitionRefiner refiner = new GraphEquitablePartitionRefiner(graph, connectionTable);
         setup(group, refiner);
     }
 
     public boolean isCanonical(Graph graph) {
+        refine(graph);
+        return firstIsIdentity();
+    }
+    
+    public void refine(Graph graph) {
         setup(graph);
         refine(Partition.unit(graph.getVertexCount()));
-        return firstIsIdentity();
     }
     
     public boolean isCanonical(Graph graph, Partition initialPartition) {
@@ -92,38 +71,29 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
         return firstIsIdentity();
     }
     
-    public SSPermutationGroup getAutomorphismGroup(
-            Graph graph, Partition partition) {
+    public PermutationGroup getAutomorphismGroup(Graph graph, Partition partition) {
         setup(graph);
         refine(partition);
-        return getGroup();
+        return getAutomorphismGroup();
     }
     
-    public SSPermutationGroup getAutomorphismGroup(Graph graph) {
+    public PermutationGroup getAutomorphismGroup(Graph graph) {
         setup(graph);
         int n = graph.getVertexCount();
         Partition unit = Partition.unit(n);
         refine(unit);
-        return getGroup();
+        return getAutomorphismGroup();
     }
     
-    public SSPermutationGroup getAutomorphismGroup(
-            Graph graph, SSPermutationGroup group) {
+    public PermutationGroup getAutomorphismGroup(Graph graph, PermutationGroup group) {
         setup(graph, group);
         refine(Partition.unit(graph.getVertexCount()));
-        return getGroup();
+        return getAutomorphismGroup();
     }
     
     @Override
     public int getVertexCount() {
         return graph.getVertexCount();
-    }
-
-    @Override
-    public boolean isConnected(int i, int j) {
-//        return graph.isConnected(i, j);
-        return connectionTable.containsKey(i) &&
-                connectionTable.get(i).contains(j);
     }
     
     public Map<Integer, List<Integer>> makeCompactConnectionTable(Graph graph) {
@@ -152,7 +122,11 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
     }
 
     @Override
-    public boolean sameColor(int i, int j) {
-        return graph.getColor(i) == graph.getColor(j);
+    public int getConnectivity(int vertexI, int vertexJ) {
+        if (connectionTable.containsKey(vertexI) && connectionTable.get(vertexI).contains(vertexJ)) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
