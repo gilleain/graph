@@ -12,8 +12,7 @@ import org.junit.Test;
 public class AutGroupTests {
     
     public void makeAutG(Graph g) {
-        GraphDiscretePartitionRefiner refiner = 
-            new GraphDiscretePartitionRefiner(false);
+        GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         PermutationGroup autG = refiner.getAutomorphismGroup(g);
         for (Permutation p : autG.all()) {
             System.out.println(p + "\t" + p.toCycleString());
@@ -21,7 +20,7 @@ public class AutGroupTests {
     }
     
     public void makeAutGWithInitialPartiton(Graph g, Partition initial) {
-        GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner(false);
+        GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         PermutationGroup autG = refiner.getAutomorphismGroup(g, initial);
         System.out.println("size with partition " + initial + " = " + autG.order());
         for (Permutation p : autG.all()) {

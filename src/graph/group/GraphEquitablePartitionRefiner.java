@@ -4,8 +4,6 @@ import graph.model.Graph;
 import group.AbstractEquitablePartitionRefiner;
 import group.IEquitablePartitionRefiner;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -20,11 +18,11 @@ public class GraphEquitablePartitionRefiner extends AbstractEquitablePartitionRe
     
     private Graph graph;
     
-    private Map<Integer, List<Integer>> connectionTable;
+    private final GraphDiscretePartitionRefiner discreteRefiner;
     
-    public GraphEquitablePartitionRefiner(Graph graph, Map<Integer, List<Integer>> connectionTable) {
+    public GraphEquitablePartitionRefiner(Graph graph, GraphDiscretePartitionRefiner discreteRefiner) {
         this.graph = graph;
-        this.connectionTable = connectionTable;
+        this.discreteRefiner = discreteRefiner;
     }
 
     public int getNumberOfVertices() {
@@ -34,11 +32,8 @@ public class GraphEquitablePartitionRefiner extends AbstractEquitablePartitionRe
     @Override
     public int neighboursInBlock(Set<Integer> block, int vertexIndex) {
         int n = 0;
-        List<Integer> connected;
-        connected = connectionTable.get(vertexIndex);
-        if (connected == null) return 0;
         
-        for (int i : connected) {
+        for (int i : discreteRefiner.getConnectedIndices(vertexIndex)) {
             if (block.contains(i)) {
                 n++;
             }

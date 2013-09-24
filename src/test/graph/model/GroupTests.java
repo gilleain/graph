@@ -71,7 +71,7 @@ public class GroupTests {
 //    	Graph parent = new Graph("0:1,1:2");
 //    	Graph child = new Graph("0:1,0:2,1:3");
     	Graph child = new Graph("0:1,1:2");
-    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner(false);
+    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner();
     	PermutationGroup group = childRefiner.getAutomorphismGroup(child);
     	for (Permutation p : group.all()) {
     		Graph pGraph = child.getPermutedGraph(p.getValues());
@@ -84,7 +84,7 @@ public class GroupTests {
     	Graph X = new Graph("0:1,0:2,1:3,2:4");
     	Graph lX0 = new Graph("0:1,0:2,1:3,2:4,3:5");
     	Graph lX1 = new Graph("0:1,0:2,1:3,2:4,4:5");
-    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner(false);
+    	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner();
     	PermutationGroup group = childRefiner.getAutomorphismGroup(X);
     	for (Permutation p : group.all()) {
     		int[] pExp = new int[p.size() + 1];
