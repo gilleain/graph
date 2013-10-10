@@ -1,6 +1,7 @@
 package graph.model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -44,9 +45,13 @@ public class GraphFileReader implements Iterable<Graph> {
         }
         return graphs.iterator();
     }
+	
+	public static List<Graph> readAll(String filename) throws FileNotFoundException {
+	    return GraphFileReader.readAll(new File(filename));
+	}
     
-    public static List<Graph> readAll(String filename) throws FileNotFoundException {
-    	GraphFileReader reader = new GraphFileReader(new FileReader(filename));
+    public static List<Graph> readAll(File file) throws FileNotFoundException {
+    	GraphFileReader reader = new GraphFileReader(new FileReader(file));
     	List<Graph> graphs = new ArrayList<Graph>();
     	for (Graph graph : reader) {
     		graphs.add(graph);
