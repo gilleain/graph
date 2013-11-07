@@ -2,6 +2,14 @@ package graph.model;
 
 public class GraphFactory {
     
+    public static Graph star(int n) {
+        Graph g = new Graph();
+        for (int i = 1; i < n; i++) {
+            g.makeEdge(0, i);
+        }
+        return g;
+    }
+    
     public static Graph cycle(int n) {
         return GraphFactory.cycle(0, n);
     }
