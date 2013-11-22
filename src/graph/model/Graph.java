@@ -39,7 +39,8 @@ public class Graph {
     public Graph(String graphString) {
         this();
         if (graphString.startsWith("[")) {
-            graphString = graphString.substring(1, graphString.length() - 1);
+            int endBracketIndex = graphString.indexOf("]");
+            graphString = graphString.substring(1, endBracketIndex);
         }
         for (String edgeString : graphString.split(",")) {
             String[] vertexStrings = edgeString.split(":");

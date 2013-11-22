@@ -58,5 +58,9 @@ public class GraphFileReader implements Iterable<Graph> {
     	}
     	return graphs;
     }
+    
+    public void close() throws IOException {
+        reader.close();
+    }
 
 }
