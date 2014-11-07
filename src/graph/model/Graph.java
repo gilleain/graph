@@ -17,11 +17,9 @@ import java.util.Map;
  * @author maclean
  *
  */
-public class Graph {
+public class Graph implements GraphInterface {
     
-   
-    
-    public List<Edge> edges;
+    public List<IntEdge> edges;
     
     public int maxVertexIndex;
     
@@ -30,7 +28,7 @@ public class Graph {
     private Map<Integer, List<Integer>> lazyConnectionTable;
     
     public Graph() {
-        this.edges = new ArrayList<Edge>();
+        this.edges = new ArrayList<IntEdge>();
         this.colors = new ArrayList<Integer>();
         this.maxVertexIndex = -1;
         lazyConnectionTable = null;
@@ -52,7 +50,7 @@ public class Graph {
     
     public Graph(Graph other) {
         this();
-        for (Edge edge : other.edges) {
+        for (IntEdge edge : other.edges) {
             this.makeEdge(edge.a, edge.b, edge.o);
         }
         this.maxVertexIndex = other.maxVertexIndex;
@@ -81,7 +79,7 @@ public class Graph {
     
     public Graph getPermutedGraph(int[] permutation) {
         Graph graph = new Graph();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             graph.makeEdge(permutation[e.a], permutation[e.b], e.o);
         }
         return graph;
@@ -118,8 +116,8 @@ public class Graph {
         if (b > maxVertexIndex) maxVertexIndex = b;
     }
     
-    public Edge getEdge(int i, int j) {
-        for (Edge e : this.edges) {
+    public IntEdge getEdge(int i, int j) {
+        for (IntEdge e : this.edges) {
             if ((e.a == i && e.b ==j) || (e.a == j && e.b == i)) {
                 return e;
             }
@@ -138,12 +136,12 @@ public class Graph {
     }
     
     public void makeEdge(int a, int b) {
-        Edge e = getEdge(a, b);
+        IntEdge e = getEdge(a, b);
         if (e == null) {
         	if (a < b) {
-        		this.edges.add(new Edge(a, b));
+        		this.edges.add(new IntEdge(a, b));
         	} else {
-        		this.edges.add(new Edge(b, a));
+        		this.edges.add(new IntEdge(b, a));
         	}
         } else {
             e.o++;
@@ -152,7 +150,7 @@ public class Graph {
     }
     
     public void makeEdge(int a, int b, int c) {
-        this.edges.add(new Edge(a, b, c));
+        this.edges.add(new IntEdge(a, b, c));
         this.updateMaxVertexIndex(a, b);
     }
     
@@ -168,7 +166,7 @@ public class Graph {
     public List<Integer> getSameColorConnected(int vertexIndex) {
         int color = getColor(vertexIndex);
         List<Integer> connected = new ArrayList<Integer>();
-        for (Edge edge : this.edges) {
+        for (IntEdge edge : this.edges) {
             if (edge.a == vertexIndex && getColor(edge.b) == color) {
                 connected.add(edge.b);
             } else if (edge.b == vertexIndex && getColor(edge.a) == color) {
@@ -182,7 +180,7 @@ public class Graph {
     }
     
     public boolean isConnected(int i, int j) {
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             if ((e.a == i && e.b ==j) || (e.a == j && e.b == i)) {
                 return true;
             }
@@ -231,7 +229,7 @@ public class Graph {
     private Map<Integer, List<Integer>> calculateConnectionTable() {
         Map<Integer, List<Integer>> connectionTable = 
             new HashMap<Integer, List<Integer>>();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             if (connectionTable.containsKey(e.a)) {
                 connectionTable.get(e.a).add(e.b);
             } else {
@@ -282,7 +280,7 @@ public class Graph {
     
     public boolean saturated(int i, int maxDegree) {
         int degree = 0;
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             if (e.a == i || e.b == i) {
                 degree += e.o;
             }
@@ -300,7 +298,7 @@ public class Graph {
     
     public Graph makeNew(int i, int j) {
         Graph copy = new Graph();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             copy.makeEdge(e.a, e.b, e.o);
         }
         for (int color : this.colors) { copy.colors.add(color); }
@@ -310,7 +308,7 @@ public class Graph {
     
     public Graph makeNew(int i, int j, int colorJ) {
         Graph copy = new Graph();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             copy.makeEdge(e.a, e.b, e.o);
         }
         copy.makeEdge(i, j);
@@ -321,7 +319,7 @@ public class Graph {
     
     public Graph makeNew(int i, int j, int colorI, int colorJ) {
         Graph copy = new Graph();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             copy.makeEdge(e.a, e.b, e.o);
         }
         copy.makeEdge(i, j);
@@ -333,7 +331,7 @@ public class Graph {
     
     public String getSortedPermutedColoredOnlyEdgeString(int[] p) {
         List<String> edgeStrings = new ArrayList<String>();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             edgeStrings.add(e.getSortedPermutedColorOnlyString(p, colors));
         }
         Collections.sort(edgeStrings);
@@ -342,7 +340,7 @@ public class Graph {
     
     public String getSortedPermutedColoredEdgeString(int[] p) {
         List<String> edgeStrings = new ArrayList<String>();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             edgeStrings.add(e.getSortedPermutedColoredString(p, colors));
         }
         Collections.sort(edgeStrings);
@@ -351,7 +349,7 @@ public class Graph {
     
     public String getSortedColorOnlyEdgeString() {
         List<String> edgeStrings = new ArrayList<String>();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             edgeStrings.add(e.toSortedColorOnlyString(colors));
         }
         Collections.sort(edgeStrings);
@@ -360,7 +358,7 @@ public class Graph {
     
     public String getColorOnlyEdgeString() {
         List<String> edgeStrings = new ArrayList<String>();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             edgeStrings.add(e.toSortedColorOnlyString(colors));
         }
         return edgeStrings.toString();
@@ -368,7 +366,7 @@ public class Graph {
     
     public String getSortedColoredEdgeString() {
         List<String> edgeStrings = new ArrayList<String>();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             edgeStrings.add(e.toSortedColoredString(colors));
         }
         Collections.sort(edgeStrings);
@@ -377,7 +375,7 @@ public class Graph {
     
     public String getSortedPermutedEdgeString(int[] p) {
         List<String> edgeStrings = new ArrayList<String>();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
 //            edgeStrings.add(e.getPermutedString(p));
             edgeStrings.add(e.getSortedPermutedString(p));
         }
@@ -387,7 +385,7 @@ public class Graph {
     
     public String getSortedEdgeStringWithEdgeOrder() {
         List<String> edgeStrings = new ArrayList<String>();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             edgeStrings.add(e.toSortedStringWithEdgeOrder());
         }
         Collections.sort(edgeStrings);
@@ -395,24 +393,24 @@ public class Graph {
     }
     
     public String getSortedEdgeString() {
-        List<Edge> sortedEdges = new ArrayList<Edge>(edges);
+        List<IntEdge> sortedEdges = new ArrayList<IntEdge>(edges);
         Collections.sort(sortedEdges);
         List<String> edgeStrings = new ArrayList<String>();
-        for (Edge e : sortedEdges) {
+        for (IntEdge e : sortedEdges) {
             edgeStrings.add(e.toSortedString());
         }
         return edgeStrings.toString();
     }
     
-    public List<Edge> getSortedEdges() {
-        List<Edge> sortedEdges = new ArrayList<Edge>(edges);
+    public List<IntEdge> getSortedEdges() {
+        List<IntEdge> sortedEdges = new ArrayList<IntEdge>(edges);
         Collections.sort(sortedEdges);
         return sortedEdges;
     }
     
     public String getPermutedEdgeString(int[] p) {
         List<String> edgeStrings = new ArrayList<String>();
-        for (Edge e : this.edges) {
+        for (IntEdge e : this.edges) {
             edgeStrings.add(e.getSortedPermutedString(p));
         }
         return edgeStrings.toString();
@@ -469,7 +467,7 @@ public class Graph {
 
     public int degree(int i) {
         int degree = 0;
-        for (Edge edge : edges) {
+        for (IntEdge edge : edges) {
             if (edge.a == i || edge.b == i) {
                 degree++;
             }
@@ -481,7 +479,7 @@ public class Graph {
     	
     	// TODO : more efficiently
     	List<String> edgeStrings = new ArrayList<String>();
-    	for (Edge edge : edges) { 
+    	for (IntEdge edge : edges) { 
     		edgeStrings.add(edge.toSortedString());
     	}
     	Collections.sort(edgeStrings);
@@ -514,7 +512,7 @@ public class Graph {
     				offset++;
     			}
     		}
-    		for (Edge e : g.edges) {
+    		for (IntEdge e : g.edges) {
     			e.a = map[e.a];
     			e.b = map[e.b];
     		}
@@ -523,9 +521,9 @@ public class Graph {
     	}
     }
 
-    public Graph remove(Edge edgeToRemove) {
+    public Graph remove(IntEdge edgeToRemove) {
         Graph copy = new Graph();
-        for (Edge edge : this.edges) {
+        for (IntEdge edge : this.edges) {
             if (edge == edgeToRemove) {
                 continue;
             } else {
@@ -562,7 +560,7 @@ public class Graph {
 
     public int getEdgeIndex(int a, int b) {
         for (int index = 0; index < edges.size(); index++) {
-            Edge e = edges.get(index); 
+            IntEdge e = edges.get(index); 
             if ((e.a == a && e.b == b) || (e.b == a && e.a == b)) {
                 return index;
             }
@@ -581,7 +579,7 @@ public class Graph {
 	public String getEdgeStringWithEdgeOrder() {
 		String s = "[";
 		int counter = edges.size();
-		for (Edge e : edges) {
+		for (IntEdge e : edges) {
 			s += e.toSortedStringWithEdgeOrder();
 			if (counter > 1) {
 				s += ", ";
@@ -594,7 +592,7 @@ public class Graph {
 
 	public Graph minus(int i) {
 		Graph h = new Graph();
-		for (Edge e : edges) {
+		for (IntEdge e : edges) {
 			if (e.a == i || e.b == i) {
 				continue;
 			} else {
