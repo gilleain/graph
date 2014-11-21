@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class GraphFileReader implements Iterable<Graph> {
+public class GraphFileReader implements Iterable<IntGraph> {
     
     private BufferedReader reader;
     
@@ -28,16 +28,16 @@ public class GraphFileReader implements Iterable<Graph> {
     	this(new FileReader(string));
 	}
 
-	public Iterator<Graph> iterator() {
-        List<Graph> graphs = new ArrayList<Graph>();
+	public Iterator<IntGraph> iterator() {
+        List<IntGraph> graphs = new ArrayList<IntGraph>();
         try {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.length() == 0) continue;
                 if (fieldIndex == 0) {
-                    graphs.add(new Graph(line));
+                    graphs.add(new IntGraph(line));
                 } else {
-                    graphs.add(new Graph(line.split("\t")[fieldIndex]));
+                    graphs.add(new IntGraph(line.split("\t")[fieldIndex]));
                 }
             }
         } catch (IOException e) {
@@ -46,14 +46,14 @@ public class GraphFileReader implements Iterable<Graph> {
         return graphs.iterator();
     }
 	
-	public static List<Graph> readAll(String filename) throws FileNotFoundException {
+	public static List<IntGraph> readAll(String filename) throws FileNotFoundException {
 	    return GraphFileReader.readAll(new File(filename));
 	}
     
-    public static List<Graph> readAll(File file) throws FileNotFoundException {
+    public static List<IntGraph> readAll(File file) throws FileNotFoundException {
     	GraphFileReader reader = new GraphFileReader(new FileReader(file));
-    	List<Graph> graphs = new ArrayList<Graph>();
-    	for (Graph graph : reader) {
+    	List<IntGraph> graphs = new ArrayList<IntGraph>();
+    	for (IntGraph graph : reader) {
     		graphs.add(graph);
     	}
     	return graphs;

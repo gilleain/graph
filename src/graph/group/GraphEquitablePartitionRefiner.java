@@ -1,6 +1,6 @@
 package graph.group;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.AbstractEquitablePartitionRefiner;
 import group.IEquitablePartitionRefiner;
 
@@ -16,11 +16,11 @@ import java.util.Set;
 public class GraphEquitablePartitionRefiner extends AbstractEquitablePartitionRefiner 
                                        implements IEquitablePartitionRefiner {
     
-    private Graph graph;
+    private IntGraph graph;
     
     private final GraphDiscretePartitionRefiner discreteRefiner;
     
-    public GraphEquitablePartitionRefiner(Graph graph, GraphDiscretePartitionRefiner discreteRefiner) {
+    public GraphEquitablePartitionRefiner(IntGraph graph, GraphDiscretePartitionRefiner discreteRefiner) {
         this.graph = graph;
         this.discreteRefiner = discreteRefiner;
     }

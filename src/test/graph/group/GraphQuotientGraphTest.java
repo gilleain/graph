@@ -2,7 +2,7 @@ package test.graph.group;
 
 import graph.group.GraphDiscretePartitionRefiner;
 import graph.group.GraphQuotientGraph;
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Partition;
 
 import org.junit.Test;
@@ -10,7 +10,7 @@ import org.junit.Test;
 public class GraphQuotientGraphTest {
     
     public void testGraph(String graphString) {
-        Graph g = new Graph(graphString);
+        IntGraph g = new IntGraph(graphString);
         GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
         refiner.refine(g);
         Partition autPart = refiner.getAutomorphismPartition();

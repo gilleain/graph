@@ -1,6 +1,6 @@
 package graph.group;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TraversalBacktracker implements PermutationGroup.Backtracker {
     
-    private Graph graph;
+    private IntGraph graph;
     
     private PermutationGroup aut;
     
@@ -26,7 +26,7 @@ public class TraversalBacktracker implements PermutationGroup.Backtracker {
     
     public TraversalBacktracker(
             String original, 
-            PermutationGroup symN, Graph g, PermutationGroup aut) {
+            PermutationGroup symN, IntGraph g, PermutationGroup aut) {
         this.graph = g;
         this.aut = aut;
         this.results = new ArrayList<Permutation>();

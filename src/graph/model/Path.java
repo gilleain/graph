@@ -2,7 +2,7 @@ package graph.model;
 
 import java.util.List;
 
-public class Path extends GraphObject {
+public class Path extends VertexGraph {
 	
 	public Path() {
 		super();

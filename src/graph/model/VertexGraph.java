@@ -9,28 +9,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class GraphObject implements GraphInterface, Iterable<Vertex>, Layoutable {
+public class VertexGraph implements Graph, Iterable<Vertex>, Layoutable {
 	
 	protected List<Vertex> vertices;
 	
 	protected List<Edge> edges;
 	
-	public GraphObject() {
+	public VertexGraph() {
 		this(new ArrayList<Vertex>(), new ArrayList<Edge>());
 	}
 	
-	public GraphObject(int vCount) {
+	public VertexGraph(int vCount) {
 		this();
 		for (int index = 0; index < vCount; index++) {
 			vertices.add(new Vertex(index));
 		}
 	}
 	
-	public GraphObject(List<Vertex> vertices) {
+	public VertexGraph(List<Vertex> vertices) {
 		this(vertices, new ArrayList<Edge>());
 	}
 	
-	public GraphObject(List<Vertex> vertices, List<Edge> edges) {
+	public VertexGraph(List<Vertex> vertices, List<Edge> edges) {
 	    if (edges == null) {
 	        this.edges = new ArrayList<Edge>();
 	    } else {
@@ -52,7 +52,7 @@ public class GraphObject implements GraphInterface, Iterable<Vertex>, Layoutable
 	}
 	
 	// XXX - nasty - why are these two classes not unified?
-	public GraphObject(Graph graph) {
+	public VertexGraph(IntGraph graph) {
 	    
         BitSet usedVertices = new BitSet(graph.getVertexCount());
         for (IntEdge e : graph.edges) {
@@ -73,8 +73,8 @@ public class GraphObject implements GraphInterface, Iterable<Vertex>, Layoutable
         }
 	}
 	
-	public Graph asGraph() {
-	    Graph graph = new Graph();
+	public IntGraph asGraph() {
+	    IntGraph graph = new IntGraph();
 	    for (Edge e : edges) {
 	        graph.makeEdge(e.getA().getIndex(), e.getB().getIndex());
 	    }
@@ -174,8 +174,8 @@ public class GraphObject implements GraphInterface, Iterable<Vertex>, Layoutable
 	 * @param other
 	 * @return
 	 */
-	public GraphObject difference(GraphObject other) {
-		GraphObject diff = new GraphObject();
+	public VertexGraph difference(VertexGraph other) {
+		VertexGraph diff = new VertexGraph();
 		for (Edge e : edges) {
 			if (other.edges.contains(e)) {
 				continue;
@@ -188,7 +188,7 @@ public class GraphObject implements GraphInterface, Iterable<Vertex>, Layoutable
 		return diff;
 	}
 	
-	public boolean connectedTo(GraphObject other) {
+	public boolean connectedTo(VertexGraph other) {
 	    for (Vertex v : vertices) {
 	        if (other.hasVertex(v)) {
 	            return true;

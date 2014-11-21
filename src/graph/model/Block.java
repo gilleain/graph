@@ -1,11 +1,11 @@
 package graph.model;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Block extends GraphObject {
+public class Block extends VertexGraph {
 
 	public Block() {
 		super(new ArrayList<Vertex>());
@@ -23,7 +23,7 @@ public class Block extends GraphObject {
 		super(i);
 	}
 	
-	public Block(Graph g) {
+	public Block(IntGraph g) {
 	    super(g);
 	}
 	

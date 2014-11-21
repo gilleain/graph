@@ -4,7 +4,7 @@ import signature.AbstractGraphBuilder;
 
 public class GraphBuilder extends AbstractGraphBuilder {
     
-    private Graph product;
+    private IntGraph product;
     
     public GraphBuilder() {
         this.product = null;
@@ -12,7 +12,7 @@ public class GraphBuilder extends AbstractGraphBuilder {
 
     @Override
     public void makeGraph() {
-        this.product = new Graph();
+        this.product = new IntGraph();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class GraphBuilder extends AbstractGraphBuilder {
         product.makeEdge(vertexIndex1, vertexIndex2);
     }
     
-    public Graph getProduct() {
+    public IntGraph getProduct() {
         return product;
     }
 

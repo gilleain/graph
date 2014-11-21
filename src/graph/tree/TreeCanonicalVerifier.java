@@ -1,6 +1,6 @@
 package graph.tree;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Permutor;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class TreeCanonicalVerifier {
 	
-	public static boolean isCanonical(Graph tree, int root) {
+	public static boolean isCanonical(IntGraph tree, int root) {
 		List<int[]> traversals = new ArrayList<int[]>();
 		int[] prefix = new int[tree.getVertexCount()];
 		traverse(tree, root, -1, 0, 0, prefix, traversals);
@@ -26,14 +26,14 @@ public class TreeCanonicalVerifier {
 		return false;
 	}
 	
-	public static int[] initialSequence(Graph tree, int root) {
+	public static int[] initialSequence(IntGraph tree, int root) {
 		int[] seq = new int[tree.getVertexCount()];
 		initialTraversal(tree, root, -1, seq, 0, 0);
 		return seq;
 	}
 	
 	private static int initialTraversal(
-			Graph tree, int vertex, int parent, int[] seq, int i, int d) {
+			IntGraph tree, int vertex, int parent, int[] seq, int i, int d) {
 		seq[i] = d;
 		int j = i + 1;
 		for (int child : tree.getConnected(vertex)) {
@@ -46,7 +46,7 @@ public class TreeCanonicalVerifier {
 		return j;
 	}
 	
-	public static void traverse(Graph tree, 
+	public static void traverse(IntGraph tree, 
 								int vertex, 
 								int parent, 
 								int depth, 

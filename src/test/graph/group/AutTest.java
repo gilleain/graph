@@ -1,7 +1,7 @@
 package test.graph.group;
 
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
 
@@ -13,7 +13,7 @@ public class AutTest {
 	@Test
 	public void nautyBridgedSquare() {
 //		Graph graph = new Graph("[0:3, 0:4, 1:3, 1:4, 2:3, 2:4]");
-		Graph graph = new Graph("[0:2, 0:3, 1:2, 1:3]");
+		IntGraph graph = new IntGraph("[0:2, 0:3, 1:2, 1:3]");
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		refiner.getAutomorphismGroup(graph);
 		Permutation best = refiner.getBest();
@@ -25,7 +25,7 @@ public class AutTest {
 	
 	@Test
 	public void missing_Eights_Zero() {
-		Graph graph = new Graph("0:1, 0:2, 0:3, 1:2, 1:4, 2:5, 3:4, 3:6, 4:7, 5:6, 5:7, 6:7");
+		IntGraph graph = new IntGraph("0:1, 0:2, 0:3, 1:2, 1:4, 2:5, 3:4, 3:6, 4:7, 5:6, 5:7, 6:7");
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		refiner.getAutomorphismGroup(graph);
 		Permutation best = refiner.getBest();
@@ -37,7 +37,7 @@ public class AutTest {
 	
 	@Test
 	public void nautyClawGraph() {
-		Graph graph = new Graph("0:3,1:3,2:3");
+		IntGraph graph = new IntGraph("0:3,1:3,2:3");
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		PermutationGroup autG = refiner.getAutomorphismGroup(graph);
 		for (Permutation p : autG.all()) {
@@ -53,7 +53,7 @@ public class AutTest {
 	
 	@Test
 	public void myClawGraph() {
-		Graph graph = new Graph("0:1,0:2,0:3");
+		IntGraph graph = new IntGraph("0:1,0:2,0:3");
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		PermutationGroup autG = refiner.getAutomorphismGroup(graph);
 		for (Permutation p : autG.all()) {

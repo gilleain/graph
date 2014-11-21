@@ -1,6 +1,6 @@
 package test.graph.tree;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import graph.model.GraphFileReader;
 import graph.tree.TreeCenterFinder;
 
@@ -20,7 +20,7 @@ public class TreeCenterFinderTest {
 	public void testFile(String filename) throws FileNotFoundException {
 		File inFile = new File(IN_DIR, filename);
 		GraphFileReader file = new GraphFileReader(new FileReader(inFile));
-		for (Graph tree : file) {
+		for (IntGraph tree : file) {
 			List<Integer> center = TreeCenterFinder.findCenter(tree);
 			System.out.println(center + "\t" + tree.getSortedEdgeString());
 		}
@@ -28,19 +28,19 @@ public class TreeCenterFinderTest {
 	
 	@Test
 	public void testCycle() {
-	    System.out.println(TreeCenterFinder.findCenter(new Graph("0:1,0:2,1:2")));
+	    System.out.println(TreeCenterFinder.findCenter(new IntGraph("0:1,0:2,1:2")));
 	}
 	
 	@Test
 	public void testTwo() {
-	    Graph tree = new Graph("0:1");
+	    IntGraph tree = new IntGraph("0:1");
 	    List<Integer> center = TreeCenterFinder.findCenter(tree);
 	    System.out.println(center);
 	}
 	
 	@Test
 	public void bugOn6() {
-	    Graph tree = new Graph("0:2,1:2,1:4,3:4,4:5");
+	    IntGraph tree = new IntGraph("0:2,1:2,1:4,3:4,4:5");
 	    List<Integer> center = TreeCenterFinder.findCenter(tree);
         System.out.println(center + "\t" + tree.getSortedEdgeString());
 	}

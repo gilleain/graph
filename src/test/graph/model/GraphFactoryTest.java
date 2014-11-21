@@ -1,6 +1,6 @@
 package test.graph.model;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import graph.model.GraphFactory;
 
 import org.junit.Assert;
@@ -10,21 +10,21 @@ public class GraphFactoryTest {
     
     @Test
     public void nCycleTest() {
-        Graph triangle = GraphFactory.cycle(3);
+        IntGraph triangle = GraphFactory.cycle(3);
         Assert.assertEquals(3, triangle.esize());
-        Graph square = GraphFactory.cycle(4);
+        IntGraph square = GraphFactory.cycle(4);
         Assert.assertEquals(4, square.esize());
-        Graph pentagon = GraphFactory.cycle(5);
+        IntGraph pentagon = GraphFactory.cycle(5);
         Assert.assertEquals(5, pentagon.esize());
     }
     
     @Test
     public void nPrismTest() {
-        Graph prism3 = GraphFactory.nPrism(3);
+        IntGraph prism3 = GraphFactory.nPrism(3);
         Assert.assertEquals(9, prism3.esize());
-        Graph prism4 = GraphFactory.nPrism(4);  // 'cube', or 'Frinkahedron'
+        IntGraph prism4 = GraphFactory.nPrism(4);  // 'cube', or 'Frinkahedron'
         Assert.assertEquals(12, prism4.esize());
-        Graph prism5 = GraphFactory.nPrism(5);
+        IntGraph prism5 = GraphFactory.nPrism(5);
         Assert.assertEquals(15, prism5.esize());
     }
 }

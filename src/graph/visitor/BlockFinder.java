@@ -2,7 +2,7 @@ package graph.visitor;
 
 import graph.model.Block;
 import graph.model.Edge;
-import graph.model.GraphObject;
+import graph.model.VertexGraph;
 import graph.model.Vertex;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class BlockFinder implements DFSVisitor {
 //        DFI = null;
     }
     
-    public void visit(GraphObject g, Vertex v) {
+    public void visit(VertexGraph g, Vertex v) {
         if (restart) {
             stack.clear();
             DFI = new int[g.vsize()];
@@ -61,7 +61,7 @@ public class BlockFinder implements DFSVisitor {
         return blocks;
     }
     
-    private void dfsb(GraphObject g, Vertex v) {
+    private void dfsb(VertexGraph g, Vertex v) {
         int vI = v.getIndex();
         
         DFI[vI] = counter;

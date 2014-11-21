@@ -1,6 +1,6 @@
 package graph.tree;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class TreeCenterFinder {
 	
-	public static List<Integer> findCenter(Graph tree) {
+	public static List<Integer> findCenter(IntGraph tree) {
 //	    System.out.println(tree.esize() + "\t" + tree.vsize());
 	    if (tree.esize() > tree.vsize() - 1) {
 	        return new ArrayList<Integer>();
@@ -56,7 +56,7 @@ public class TreeCenterFinder {
 	    }
 	}
 
-    public static Integer findUniqueCenter(Graph tree) {
+    public static Integer findUniqueCenter(IntGraph tree) {
         List<Integer> center = TreeCenterFinder.findCenter(tree);
         if (center.size() == 0) {
             return -1;  // ugh - only happens if its a cycle!
@@ -75,7 +75,7 @@ public class TreeCenterFinder {
         }
     }
     
-    private static int getHeight(Graph tree, int root, int partner) {
+    private static int getHeight(IntGraph tree, int root, int partner) {
         int height = 1;
         BitSet visited = new BitSet();
         for (int child : tree.getConnected(root)) {
@@ -85,7 +85,7 @@ public class TreeCenterFinder {
         return height;
     }
     
-    private static int getHeight(Graph tree, int root, BitSet visited) {
+    private static int getHeight(IntGraph tree, int root, BitSet visited) {
         visited.set(root);
         int height = 1;
         for (int child : tree.getConnected(root)) {

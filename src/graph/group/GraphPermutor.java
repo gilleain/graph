@@ -1,21 +1,21 @@
 package graph.group;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Permutor;
 
 import java.util.Iterator;
 
 
-public class GraphPermutor extends Permutor implements Iterator<Graph> {
+public class GraphPermutor extends Permutor implements Iterator<IntGraph> {
     
-    private Graph graph;
+    private IntGraph graph;
 
-    public GraphPermutor(Graph graph) {
+    public GraphPermutor(IntGraph graph) {
         super(graph.getVertexCount());
         this.graph = graph;
     }
 
-    public Graph next() {
+    public IntGraph next() {
         return graph.getPermutedGraph(getNextPermutation());
     }
     

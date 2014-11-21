@@ -1,6 +1,6 @@
 package graph.tree;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class TreeCertificateMaker {
 	
-	public static String treeToCertificate(Graph tree) {
+	public static String treeToCertificate(IntGraph tree) {
 		int n = tree.getVertexCount();
 		int numberOfRemainingVertices = n;
 		
@@ -46,7 +46,7 @@ public class TreeCertificateMaker {
 		return cert;
 	}
 	
-	private static int reduce(Graph tree, List<List<Integer>> children, Map<Integer, List<Integer>> adjacencyMatrix, String[] labels) {
+	private static int reduce(IntGraph tree, List<List<Integer>> children, Map<Integer, List<Integer>> adjacencyMatrix, String[] labels) {
 		int n = tree.getVertexCount();
 		int lastParent = -1;
 		for (int i = 0; i < n; i++) {

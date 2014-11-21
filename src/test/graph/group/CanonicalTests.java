@@ -3,7 +3,7 @@ package test.graph.group;
 import java.util.Arrays;
 
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Partition;
 import group.Permutation;
 import group.PermutationGroup;
@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class CanonicalTests {
 	
-	public void test(Graph g, Partition p) {
+	public void test(IntGraph g, Partition p) {
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 //		boolean canonical = refiner.isCanonical(g, p);
 //		System.out.println(canonical);
@@ -33,7 +33,7 @@ public class CanonicalTests {
 	public void test_3To4_2To1_1To2() {
 //		Graph gA = new Graph("0:1,0:2,0:4,1:3,1:5,2:3,2:6,3:4");
 //		Graph gB = new Graph("0:1,0:2,0:4,1:3,1:6,2:3,2:5,3:4");
-		Graph gC = new Graph("0:2,0:3,0:4,1:2,1:3,1:4,2:5,3:6");
+		IntGraph gC = new IntGraph("0:2,0:3,0:4,1:2,1:3,1:4,2:5,3:6");
 		Partition p = Partition.fromString("0,1,2,3|4|5,6");
 //		test(gA, p);
 //		test(gB, p);
@@ -42,7 +42,7 @@ public class CanonicalTests {
 	
 	@Test
 	public void findCanonical() {
-		Graph gA = new Graph("0:1,0:2,0:4,1:3,1:5,2:3,2:6,3:4");
+		IntGraph gA = new IntGraph("0:1,0:2,0:4,1:3,1:5,2:3,2:6,3:4");
 		GraphDiscretePartitionRefiner refiner = new GraphDiscretePartitionRefiner();
 		refiner.setup(gA);
 		String initialBest = refiner.getHalfMatrixString();
@@ -51,7 +51,7 @@ public class CanonicalTests {
 		PermutationGroup symN = PermutationGroup.makeSymN(gA.vsize());
 		for (Permutation p : symN.all()) {
 			refiner = new GraphDiscretePartitionRefiner();
-			Graph gP = gA.getPermutedGraph(p);
+			IntGraph gP = gA.getPermutedGraph(p);
 			refiner.setup(gP);
 			String best = refiner.getHalfMatrixString();
 //			System.out.println(best);

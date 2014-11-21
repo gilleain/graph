@@ -1,6 +1,6 @@
 package graph.group;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.AbstractDiscretePartitionRefiner;
 import group.Partition;
 import group.Permutation;
@@ -51,7 +51,7 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
         return connectionTable[vertexIndex];
     }
     
-    public Partition getInitialPartition(Graph graph) {
+    public Partition getInitialPartition(IntGraph graph) {
         if (ignoreVertexColors) {
             int n = graph.getVertexCount();
             return Partition.unit(n);
@@ -88,7 +88,7 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
         return colorPartition;
     }
     
-    public void setup(Graph graph) {
+    public void setup(IntGraph graph) {
     	if (connectionTable == null) {
     		setupConnectionTable(graph);
     	}
@@ -97,41 +97,41 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
         super.setup(group, new GraphEquitablePartitionRefiner(graph, this));
     }
     
-    private void setup(Graph graph, PermutationGroup group) {
+    private void setup(IntGraph graph, PermutationGroup group) {
     	setupConnectionTable(graph);
     	super.setup(group, new GraphEquitablePartitionRefiner(graph, this));
     }
 
-    public boolean isCanonical(Graph graph) {
+    public boolean isCanonical(IntGraph graph) {
         return isCanonical(graph, getInitialPartition(graph));
     }
     
-    public void refine(Graph graph) {
+    public void refine(IntGraph graph) {
         refine(graph, getInitialPartition(graph));
     }
     
-    public void refine(Graph graph, Partition partition) {
+    public void refine(IntGraph graph, Partition partition) {
         setup(graph);
         super.refine(partition);
     }
     
-    public boolean isCanonical(Graph graph, Partition partition) {
+    public boolean isCanonical(IntGraph graph, Partition partition) {
         setup(graph);
         refine(partition);
         return isCanonical();
     }
     
-    public PermutationGroup getAutomorphismGroup(Graph graph, Partition partition) {
+    public PermutationGroup getAutomorphismGroup(IntGraph graph, Partition partition) {
         refine(graph, partition);
         return getAutomorphismGroup();
     }
     
-    public PermutationGroup getAutomorphismGroup(Graph graph) {
+    public PermutationGroup getAutomorphismGroup(IntGraph graph) {
         refine(graph, getInitialPartition(graph));
         return getAutomorphismGroup();
     }
     
-    public PermutationGroup getAutomorphismGroup(Graph graph, PermutationGroup group) {
+    public PermutationGroup getAutomorphismGroup(IntGraph graph, PermutationGroup group) {
         setup(graph, group);
         refine(getInitialPartition(graph));
         return getAutomorphismGroup();
@@ -142,7 +142,7 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
         return connectionTable.length;
     }
     
-    private void setupConnectionTable(Graph graph) {
+    private void setupConnectionTable(IntGraph graph) {
     	int vertexCount = graph.getVertexCount();
         connectionTable = new int[vertexCount][];
         if (!ignoreEdgeColors) {
@@ -167,7 +167,7 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
         }
     }
     
-    public Map<Integer, List<Integer>> makeCompactConnectionTable(Graph graph) {
+    public Map<Integer, List<Integer>> makeCompactConnectionTable(IntGraph graph) {
         List<List<Integer>> table = new ArrayList<List<Integer>>();
         int tableIndex = 0;
         int count = graph.getVertexCount();

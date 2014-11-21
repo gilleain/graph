@@ -1,6 +1,6 @@
 package graph.visitor;
 
-import graph.model.GraphObject;
+import graph.model.VertexGraph;
 import graph.model.Path;
 import graph.model.Vertex;
 
@@ -34,13 +34,13 @@ public class DFSPathFinder implements DFSVisitor {
 	    paths = new ArrayList<Path>();
 	}
 
-	public void visit(GraphObject g, Vertex v) {
+	public void visit(VertexGraph g, Vertex v) {
 		Path path = new Path();
 		visit(g, v, path);
 		paths.add(path);
 	}
 	
-	private void visit(GraphObject g, Vertex v, Path path) {
+	private void visit(VertexGraph g, Vertex v, Path path) {
 		path.add(v);
 		for (Vertex w : g.getConnected(v)) {
 			if (path.hasVertex(w)) {

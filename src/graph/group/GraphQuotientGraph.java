@@ -1,6 +1,6 @@
 package graph.group;
 
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Partition;
 
 import java.util.ArrayList;
@@ -68,9 +68,9 @@ public class GraphQuotientGraph  {
     
     private List<Edge> edges;
     
-    private Graph g;
+    private IntGraph g;
     
-    public GraphQuotientGraph(Graph g) {
+    public GraphQuotientGraph(IntGraph g) {
         this.g = g;
         vertices = new ArrayList<Vertex>();
         edges = new ArrayList<Edge>();

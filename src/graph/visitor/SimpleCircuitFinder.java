@@ -1,7 +1,7 @@
 package graph.visitor;
 
 import graph.model.Block;
-import graph.model.GraphObject;
+import graph.model.VertexGraph;
 import graph.model.Vertex;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class SimpleCircuitFinder implements DFSVisitor {
         currentCircuit = new Block();
 	}
 
-	public void visit(GraphObject g, Vertex root) {
+	public void visit(VertexGraph g, Vertex root) {
 		if (visited.contains(root)) {
 			return;
 		}
@@ -62,7 +62,7 @@ public class SimpleCircuitFinder implements DFSVisitor {
 //		System.out.println("visited " + visited);
 	}
 	
-	private void traverseEdge(GraphObject g, Vertex start, Vertex end) {
+	private void traverseEdge(VertexGraph g, Vertex start, Vertex end) {
 		// TODO : all in one method?
 		currentCircuit.add(start);
 		currentCircuit.add(end);

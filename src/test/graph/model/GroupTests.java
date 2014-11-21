@@ -1,7 +1,7 @@
 package test.graph.model;
 
 import graph.group.GraphDiscretePartitionRefiner;
-import graph.model.Graph;
+import graph.model.IntGraph;
 import group.Permutation;
 import group.PermutationGroup;
 
@@ -70,20 +70,20 @@ public class GroupTests {
     public void testMckaysMethod() {
 //    	Graph parent = new Graph("0:1,1:2");
 //    	Graph child = new Graph("0:1,0:2,1:3");
-    	Graph child = new Graph("0:1,1:2");
+    	IntGraph child = new IntGraph("0:1,1:2");
     	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner();
     	PermutationGroup group = childRefiner.getAutomorphismGroup(child);
     	for (Permutation p : group.all()) {
-    		Graph pGraph = child.getPermutedGraph(p.getValues());
+    		IntGraph pGraph = child.getPermutedGraph(p.getValues());
     		System.out.println(p + "\t" + pGraph.getSortedEdgeString());
     	}
     }
     
     @Test
     public void mckayTestTwo() {
-    	Graph X = new Graph("0:1,0:2,1:3,2:4");
-    	Graph lX0 = new Graph("0:1,0:2,1:3,2:4,3:5");
-    	Graph lX1 = new Graph("0:1,0:2,1:3,2:4,4:5");
+    	IntGraph X = new IntGraph("0:1,0:2,1:3,2:4");
+    	IntGraph lX0 = new IntGraph("0:1,0:2,1:3,2:4,3:5");
+    	IntGraph lX1 = new IntGraph("0:1,0:2,1:3,2:4,4:5");
     	GraphDiscretePartitionRefiner childRefiner = new GraphDiscretePartitionRefiner();
     	PermutationGroup group = childRefiner.getAutomorphismGroup(X);
     	for (Permutation p : group.all()) {

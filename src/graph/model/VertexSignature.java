@@ -7,14 +7,14 @@ import signature.ColoredTree;
 
 public class VertexSignature extends AbstractVertexSignature {
     
-    private Graph graph;
+    private IntGraph graph;
     
-    public VertexSignature(int vertexIndex, Graph graph) {
+    public VertexSignature(int vertexIndex, IntGraph graph) {
         this.graph = graph;
         super.createMaximumHeight(vertexIndex, graph.getVertexCount());
     }
     
-    public VertexSignature(int vertexIndex, Graph graph, int height) {
+    public VertexSignature(int vertexIndex, IntGraph graph, int height) {
         this.graph = graph;
         super.create(vertexIndex, graph.getVertexCount(), height);
     }
@@ -53,7 +53,7 @@ public class VertexSignature extends AbstractVertexSignature {
         ColoredTree tree = AbstractVertexSignature.parse(signatureString);
         GraphBuilder builder = new GraphBuilder();
         builder.makeFromColoredTree(tree);
-        Graph g = builder.getProduct();
+        IntGraph g = builder.getProduct();
         GraphSignature graphSig = new GraphSignature(g);
         return (VertexSignature) graphSig.signatureForVertex(0);
     }

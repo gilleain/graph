@@ -1,7 +1,7 @@
 package graph.visitor;
 
 import graph.model.Block;
-import graph.model.GraphObject;
+import graph.model.VertexGraph;
 import graph.model.Vertex;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class ConnectedComponentFinder implements DFSVisitor {
 //        currentComponentIndex = 0;
 	}
 
-	public void visit(GraphObject g, Vertex v) {
+	public void visit(VertexGraph g, Vertex v) {
 	    if (shouldSetup) setup();
 	    
 		Block currentComponent = new Block(); 
@@ -41,7 +41,7 @@ public class ConnectedComponentFinder implements DFSVisitor {
 		}
 	}
 	
-	private void dfs(GraphObject g, Vertex v, Block currentComponent) {
+	private void dfs(VertexGraph g, Vertex v, Block currentComponent) {
 		if (visited.contains(v)) {
 			return;
 		} else {

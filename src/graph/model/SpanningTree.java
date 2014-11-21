@@ -1,7 +1,7 @@
 package graph.model;
 
 import graph.model.Edge;
-import graph.model.GraphObject;
+import graph.model.VertexGraph;
 import graph.model.Path;
 import graph.model.Vertex;
 
@@ -11,15 +11,15 @@ import java.util.BitSet;
 import java.util.List;
 import java.util.Stack;
 
-public class SpanningTree extends GraphObject {
+public class SpanningTree extends VertexGraph {
     
-    private GraphObject g;
+    private VertexGraph g;
     
     private List<Edge> cycleEdges;
 
-    private GraphObject tree;
+    private VertexGraph tree;
     
-    public SpanningTree(GraphObject g) {
+    public SpanningTree(VertexGraph g) {
         this.g = g;
         this.cycleEdges = new ArrayList<Edge>();
         this.tree = makeSpanningTree(cycleEdges);
@@ -29,16 +29,16 @@ public class SpanningTree extends GraphObject {
         return cycleEdges;
     }
     
-    public GraphObject getTree() {
+    public VertexGraph getTree() {
         return tree;
     }
     
-    private GraphObject makeSpanningTree(List<Edge> cycleEdges) {
+    private VertexGraph makeSpanningTree(List<Edge> cycleEdges) {
         // make the tree
         int depth = 1;
         int n = g.vsize();
         int[] depthList = new int[n];
-        GraphObject tree = new GraphObject();
+        VertexGraph tree = new VertexGraph();
         int index = 0;
         while (index < n) {
             depth = dfs(index, depthList, depth, tree, cycleEdges);
@@ -52,7 +52,7 @@ public class SpanningTree extends GraphObject {
         return tree;
     }
     
-    private int dfs(int index, int[] depthList, int depth, GraphObject  tree, List<Edge> cycleEdges) {
+    private int dfs(int index, int[] depthList, int depth, VertexGraph  tree, List<Edge> cycleEdges) {
         depthList[index] = depth;
         Vertex vertex = g.getVertex(index);
         if (!tree.hasVertex(vertex)) {
