@@ -85,8 +85,13 @@ public class VertexGraph implements Graph, Iterable<Vertex>, Layoutable {
 		return edges.size();
 	}
 
+	@Deprecated
 	public int vsize() {
 		return vertices.size();
+	}
+	
+	public int getVertexCount() {
+	    return vertices.size();
 	}
 	
 	public int indexOf(Vertex v) {
@@ -277,5 +282,14 @@ public class VertexGraph implements Graph, Iterable<Vertex>, Layoutable {
 	    }
 	    return table;
 	}
+	
+	public void makeEdge(int vertexI, int vertexJ) {
+	    edges.add(new Edge(getVertexWithIndex(vertexI), getVertexWithIndex(vertexJ)));
+	}
+
+    @Override
+    public void addLabel(int vertex, String label) {
+        vertices.get(vertex).setLabel(label);
+    }
 
 }

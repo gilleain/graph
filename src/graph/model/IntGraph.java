@@ -23,13 +23,22 @@ public class IntGraph implements Graph {
     
     public int maxVertexIndex;
     
-    public List<Integer> colors;
+    /**
+     * Colors for the vertices - essentially integer labels
+     */
+    public Map<Integer, Integer> colors;
+    
+    /**
+     * String labels for the vertices
+     */
+    public Map<Integer, String> labels;
     
     private Map<Integer, List<Integer>> lazyConnectionTable;
     
     public IntGraph() {
         this.edges = new ArrayList<IntEdge>();
-        this.colors = new ArrayList<Integer>();
+        this.colors = new HashMap<Integer, Integer>();
+        this.labels = new HashMap<Integer, String>();
         this.maxVertexIndex = -1;
         lazyConnectionTable = null;
     }
@@ -93,9 +102,13 @@ public class IntGraph implements Graph {
         }
     }
     
-    public void setColors(int... colors) {
-        for (int color : colors) {
-            this.colors.add(color);
+    /**
+     * @param colorList
+     * @deprecated not great, as it assumes that there is a color for each vertex
+     */
+    public void setColors(int... colorList) {
+        for (int colorIndex = 0; colorIndex < colorList.length; colorIndex++) {
+            this.colors.put(colorIndex, colorList[colorIndex]);
         }
     }
     
@@ -108,7 +121,7 @@ public class IntGraph implements Graph {
     }
     
     public List<String> getLabels() {
-        return null;
+        return new ArrayList<String>(labels.values());
     }
     
     private void updateMaxVertexIndex(int a, int b) {
@@ -301,19 +314,23 @@ public class IntGraph implements Graph {
         for (IntEdge e : this.edges) {
             copy.makeEdge(e.a, e.b, e.o);
         }
-        for (int color : this.colors) { copy.colors.add(color); }
+        for (int colorIndex : this.colors.keySet()) { 
+            copy.colors.put(colorIndex, colors.get(colorIndex));
+        }
         copy.makeEdge(i, j);
         return copy;
     }
     
-    public IntGraph makeNew(int i, int j, int colorJ) {
+    public IntGraph makeNew(int i, int j, int edgeColor) {
         IntGraph copy = new IntGraph();
         for (IntEdge e : this.edges) {
             copy.makeEdge(e.a, e.b, e.o);
         }
         copy.makeEdge(i, j);
-        for (int color : this.colors) { copy.colors.add(color); }
-        copy.colors.add(colorJ);
+        for (int colorIndex : this.colors.keySet()) { 
+            copy.colors.put(colorIndex, colors.get(colorIndex));
+        }
+        copy.colors.put(copy.getEdgeIndex(i, j), edgeColor);
         return copy;
     }
     
@@ -323,9 +340,11 @@ public class IntGraph implements Graph {
             copy.makeEdge(e.a, e.b, e.o);
         }
         copy.makeEdge(i, j);
-        for (int color : this.colors) { copy.colors.add(color); }
-        copy.colors.add(colorI);
-        copy.colors.add(colorJ);
+        for (int colorIndex : this.colors.keySet()) { 
+            copy.colors.put(colorIndex, colors.get(colorIndex));
+        }
+        copy.colors.put(i, colorI);
+        copy.colors.put(j, colorJ);
         return copy;
     }
     
@@ -431,7 +450,8 @@ public class IntGraph implements Graph {
     
     public boolean colorsInOrder() {
         int prev = -1;
-        for (int color : colors) {
+        for (int colorKey : colors.keySet()) {
+            int color = colors.get(colorKey);
             if (color >= prev) {
                 prev = color;
             } else {
@@ -611,5 +631,10 @@ public class IntGraph implements Graph {
 		}
 		return h;
 	}
+
+    @Override
+    public void addLabel(int vertex, String label) {
+        
+    }
     
 }

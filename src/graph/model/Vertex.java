@@ -4,7 +4,17 @@ public class Vertex {
 	
 	private int index;
 	
-	public Vertex(int index) {
+	private String label;
+	
+	public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public Vertex(int index) {
 		this.index = index;
 	}
 	

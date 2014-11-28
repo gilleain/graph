@@ -1,6 +1,6 @@
 package graph.model;
 
-import java.util.List;
+import java.util.Map;
 
 public class IntEdge implements Comparable<IntEdge> {
     
@@ -31,7 +31,7 @@ public class IntEdge implements Comparable<IntEdge> {
     	this.b = Integer.parseInt(bits[1].trim());
     }
     
-    public String getSortedPermutedColorOnlyString(int[] p, List<Integer> colors) {
+    public String getSortedPermutedColorOnlyString(int[] p, Map<Integer, Integer> colors) {
         int pa = p[this.a];
         int pb = p[this.b];
         int ca = colors.get(pa);
@@ -43,7 +43,7 @@ public class IntEdge implements Comparable<IntEdge> {
         }
     }
     
-    public String getSortedPermutedColoredString(int[] p, List<Integer> colors) {
+    public String getSortedPermutedColoredString(int[] p, Map<Integer, Integer> colors) {
         int pa = p[this.a];
         int pb = p[this.b];
         if (pa < pb) {
@@ -69,7 +69,7 @@ public class IntEdge implements Comparable<IntEdge> {
         return p[this.a] + ":" + p[this.b];
     }
     
-    public String toSortedColorOnlyString(List<Integer> colors) {
+    public String toSortedColorOnlyString(Map<Integer, Integer> colors) {
         int ca = colors.get(a);
         int cb = colors.get(b);
         if (ca < cb) {
@@ -80,7 +80,7 @@ public class IntEdge implements Comparable<IntEdge> {
         
     }
     
-    public String toSortedColoredString(List<Integer> colors) {
+    public String toSortedColoredString(Map<Integer, Integer> colors) {
         if (a < b) {
             return a + "(" + colors.get(a) + "):" + b + "(" + colors.get(b) + ")";
         } else {
