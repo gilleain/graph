@@ -292,4 +292,9 @@ public class VertexGraph implements Graph, Iterable<Vertex>, Layoutable {
         vertices.get(vertex).setLabel(label);
     }
 
+    @Override
+    public String getLabel(int i) {
+        return vertices.get(i).getLabel();
+    }
+
 }

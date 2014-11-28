@@ -8,4 +8,6 @@ public interface Graph {
     
     void addLabel(int vertex, String label);
 
+    String getLabel(int i);
+
 }

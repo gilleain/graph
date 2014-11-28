@@ -634,7 +634,12 @@ public class IntGraph implements Graph {
 
     @Override
     public void addLabel(int vertex, String label) {
-        
+        labels.put(vertex, label);
+    }
+
+    @Override
+    public String getLabel(int i) {
+        return labels.get(i);
     }
     
 }
