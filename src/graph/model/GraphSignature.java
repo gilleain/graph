@@ -5,9 +5,9 @@ import signature.AbstractVertexSignature;
 
 public class GraphSignature extends AbstractGraphSignature {
     
-    private IntGraph graph;
+    private Graph graph;
     
-    public GraphSignature(IntGraph graph) {
+    public GraphSignature(Graph graph) {
         this.graph = graph;
     }
 
@@ -35,7 +35,7 @@ public class GraphSignature extends AbstractGraphSignature {
         return new VertexSignature(vertexIndex, graph, height);
     }
 
-	public IntGraph getGraph() {
+	public Graph getGraph() {
 		return this.graph;
 	}
 	

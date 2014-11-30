@@ -297,4 +297,10 @@ public class VertexGraph implements Graph, Iterable<Vertex>, Layoutable {
         return vertices.get(i).getLabel();
     }
 
+    @Override
+    public int getEdgeColor(int vertexIndex, int otherVertexIndex) {
+        // TODO
+        return -1;
+    }
+
 }

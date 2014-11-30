@@ -7,14 +7,14 @@ import signature.ColoredTree;
 
 public class VertexSignature extends AbstractVertexSignature {
     
-    private IntGraph graph;
+    private Graph graph;
     
-    public VertexSignature(int vertexIndex, IntGraph graph) {
+    public VertexSignature(int vertexIndex, Graph graph) {
         this.graph = graph;
         super.createMaximumHeight(vertexIndex, graph.getVertexCount());
     }
     
-    public VertexSignature(int vertexIndex, IntGraph graph, int height) {
+    public VertexSignature(int vertexIndex, Graph graph, int height) {
         this.graph = graph;
         super.create(vertexIndex, graph.getVertexCount(), height);
     }
@@ -42,7 +42,7 @@ public class VertexSignature extends AbstractVertexSignature {
     @Override
     protected String getEdgeLabel(int vertexIndex, int otherVertexIndex) {
         // XXX - for some odd reason, just using the string value of the order doesn't work...
-        switch (graph.getEdge(vertexIndex, otherVertexIndex).o) {
+        switch (graph.getEdgeColor(vertexIndex, otherVertexIndex)) {
             case 1  : return "-";
             case 2  : return "=";
             default : return "";

@@ -641,5 +641,10 @@ public class IntGraph implements Graph {
     public String getLabel(int i) {
         return labels.get(i);
     }
+
+    @Override
+    public int getEdgeColor(int vertexIndex, int otherVertexIndex) {
+        return getEdge(vertexIndex, otherVertexIndex).o;
+    }
     
 }
