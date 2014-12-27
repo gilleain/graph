@@ -1,7 +1,6 @@
 package graph.model;
 
 import signature.AbstractGraphSignature;
-import signature.AbstractVertexSignature;
 
 public class GraphSignature extends AbstractGraphSignature {
     
@@ -27,16 +26,20 @@ public class GraphSignature extends AbstractGraphSignature {
     }
 
     @Override
-    public AbstractVertexSignature signatureForVertex(int vertexIndex) {
+    public VertexSignature signatureForVertex(int vertexIndex) {
         return new VertexSignature(vertexIndex, graph);
     }
     
-    public AbstractVertexSignature signatureForVertex(int vertexIndex, int height) {
+    public VertexSignature signatureForVertex(int vertexIndex, int height) {
         return new VertexSignature(vertexIndex, graph, height);
     }
 
 	public Graph getGraph() {
 		return this.graph;
 	}
+
+    public String getGraphSignature() {
+        return super.getGraphSignature();
+    }
 	
 }
