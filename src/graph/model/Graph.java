@@ -6,6 +6,8 @@ public interface Graph {
 
     int getVertexCount();
     
+    int getEdgeCount();
+    
     void makeEdge(int vertexI, int vertexJ);
     
     void addLabel(int vertex, String label);
@@ -15,5 +17,7 @@ public interface Graph {
     List<Integer> getConnected(int vertexIndex);
 
     int getEdgeColor(int vertexIndex, int otherVertexIndex);
+
+    int degree(int index);
 
 }

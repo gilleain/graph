@@ -587,6 +587,10 @@ public class IntGraph implements Graph {
         }
         return -1;
     }
+    
+    public int getEdgeCount() {
+        return esize();
+    }
 
     public int esize() {
         return edges.size();

@@ -80,14 +80,19 @@ public class VertexGraph implements Graph, Iterable<Vertex>, Layoutable {
 	    }
         return graph;
     }
+	
+	public int getEdgeCount() {
+	 return edges.size();   
+	}
 
+	@Deprecated
 	public int esize() {
-		return edges.size();
+	    return getEdgeCount();
 	}
 
 	@Deprecated
 	public int vsize() {
-		return vertices.size();
+		return getVertexCount();
 	}
 	
 	public int getVertexCount() {
@@ -301,6 +306,16 @@ public class VertexGraph implements Graph, Iterable<Vertex>, Layoutable {
     public int getEdgeColor(int vertexIndex, int otherVertexIndex) {
         // TODO
         return -1;
+    }
+
+    @Override
+    public int degree(int index) {
+        int degree = 0;
+        Vertex vertexToSearchFor = new Vertex(index);
+        for (Edge e : edges) {
+            if (e.contains(vertexToSearchFor)) degree++;
+        }
+        return degree;
     }
 
 }

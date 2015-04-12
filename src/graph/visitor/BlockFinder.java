@@ -46,9 +46,10 @@ public class BlockFinder implements DFSVisitor {
     public void visit(VertexGraph g, Vertex v) {
         if (restart) {
             stack.clear();
-            DFI = new int[g.vsize()];
-            lowpoint = new int[g.vsize()];
-            parent = new int[g.vsize()];
+            int vSize = g.getVertexCount();
+            DFI = new int[vSize];
+            lowpoint = new int[vSize];
+            parent = new int[vSize];
             Arrays.fill(parent, -1);
             counter = 1;
             blocks = new ArrayList<Block>();

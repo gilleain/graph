@@ -36,7 +36,7 @@ public class SpanningTree extends VertexGraph {
     private VertexGraph makeSpanningTree(List<Edge> cycleEdges) {
         // make the tree
         int depth = 1;
-        int n = g.vsize();
+        int n = g.getVertexCount();
         int[] depthList = new int[n];
         VertexGraph tree = new VertexGraph();
         int index = 0;
@@ -87,7 +87,7 @@ public class SpanningTree extends VertexGraph {
         Vertex vJ = tree.getVertex(vIdxJ);
         
         // label each vertex with its depth from vi
-        int[] labels = new int[tree.vsize()];
+        int[] labels = new int[tree.getVertexCount()];
         labels[vIdxI] = 1;
         Stack<Vertex> toVisit = new Stack<Vertex>();
         toVisit.push(vI);
@@ -106,7 +106,7 @@ public class SpanningTree extends VertexGraph {
         // construct the path by iterating from vj->vi, following only decreasing labels
         path.add(vJ);
         Vertex prev = vJ;
-        BitSet visited = new BitSet(tree.vsize());
+        BitSet visited = new BitSet(tree.getVertexCount());
         visited.set(vIdxJ);
         int prevLabel = labels[tree.indexOf(prev)];
         while (!prev.equals(vI)) {

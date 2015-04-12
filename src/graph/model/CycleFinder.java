@@ -74,7 +74,7 @@ public class CycleFinder {
     public static Block getMaxCycle(List<Block> cycles) {
         int maxCycleSize = -1;
         for (Block cycle : cycles) {
-            int size = cycle.esize();
+            int size = cycle.getEdgeCount();
             // System.out.println("cycle of size " + size + " = " + cycle);
             if (size > maxCycleSize) {
                 maxCycleSize = size;
@@ -82,7 +82,7 @@ public class CycleFinder {
         }
         Block maxCycle = null;
         for (Block cycle : cycles) {
-            int size = cycle.esize();
+            int size = cycle.getEdgeCount();
             if (size == maxCycleSize) {
                 ConnectedComponentFinder finder = new ConnectedComponentFinder();
                 finder.visit(cycle, cycle.getVertex(0));
@@ -95,7 +95,7 @@ public class CycleFinder {
     }
     
     public static boolean isSimpleConnected(Block cycle) {
-        if (cycle.esize() == cycle.vsize()) {
+        if (cycle.getEdgeCount() == cycle.getVertexCount()) {
             ConnectedComponentFinder finder = new ConnectedComponentFinder();
             cycle.accept(finder);
             if (finder.getComponents().size() == 1) {
@@ -115,8 +115,8 @@ public class CycleFinder {
         Collections.sort(connectedCycles, new Comparator<Block>() {
 
             public int compare(Block b0, Block b1) {
-                return ((b0.esize() < b1.esize()) ? 1 : (b0.esize() > b1
-                        .esize()) ? -1 : 0);
+                return ((b0.getEdgeCount() < b1.getEdgeCount()) ? 1 : (b0.getEdgeCount() > b1
+                        .getEdgeCount()) ? -1 : 0);
             }
 
         });
@@ -124,7 +124,7 @@ public class CycleFinder {
     }
 
     public static BitSet cycleToBitSet(Block cycle, Block graph) {
-        BitSet bitSet = new BitSet(graph.esize());
+        BitSet bitSet = new BitSet(graph.getEdgeCount());
         int i = 0;
         for (Edge e : graph.getEdges()) {
             if (cycle.hasEdge(e)) {

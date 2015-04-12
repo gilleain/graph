@@ -2,8 +2,8 @@ package test.graph.tree;
 
 import graph.model.IntGraph;
 import graph.tree.TreeCertificateMaker;
-import junit.framework.Assert;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 
