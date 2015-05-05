@@ -140,4 +140,8 @@ public class IntEdge implements Comparable<IntEdge> {
     public boolean adjacent(IntEdge other) {
         return a == other.a || a == other.b || b == other.a || b == other.b;
     }
+    
+    public boolean contains(int vertex) {
+        return a == vertex || b == vertex;
+    }
 }
