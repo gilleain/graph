@@ -1,11 +1,5 @@
 package graph.group;
 
-import graph.model.IntGraph;
-import group.AbstractDiscretePartitionRefiner;
-import group.Partition;
-import group.Permutation;
-import group.PermutationGroup;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,6 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import graph.model.IntGraph;
+import group.AbstractDiscretePartitionRefiner;
+import group.Partition;
+import group.Permutation;
+import group.PermutationGroup;
 
 
 /**
@@ -27,16 +27,7 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
     
     private boolean ignoreVertexColors;
     
-    /**
-     * A convenience lookup table for connections.
-     */
-    private int[][] connectionTable;
-    
-    /**
-     * A convenience lookup table for edge colors.
-     */
-    private int[][] edgeColors;
-    
+    private GraphRefinable refinable;
     
     public GraphDiscretePartitionRefiner() {
     	this(false, false);
@@ -47,18 +38,21 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
     	this.ignoreEdgeColors = ignoreEdgeColors;
     }
     
+    private GraphRefinable getRefinable(IntGraph graph) {
+        if (refinable == null) {
+            refinable = new GraphRefinable(graph, ignoreEdgeColors);
+        }
+        return refinable;
+    }
+    
     public int[] getConnectedIndices(int vertexIndex) {
-        return connectionTable[vertexIndex];
+        return refinable.getConnectedIndices(vertexIndex);
     }
     
     public Partition getInitialPartition(IntGraph graph) {
         if (ignoreVertexColors) {
             int n = graph.getVertexCount();
             return Partition.unit(n);
-        }
-        
-        if (connectionTable == null) {
-            setupConnectionTable(graph);
         }
         
         Map<Integer, SortedSet<Integer>> cellMap = 
@@ -89,17 +83,14 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
     }
     
     public void setup(IntGraph graph) {
-    	if (connectionTable == null) {
-    		setupConnectionTable(graph);
-    	}
+    	GraphRefinable refinable = getRefinable(graph);
         int n = graph.getVertexCount();
         PermutationGroup group = new PermutationGroup(new Permutation(n));
-        super.setup(group, new GraphEquitablePartitionRefiner(graph, this));
+        super.setup(group, new GraphEquitablePartitionRefiner(refinable));
     }
     
     private void setup(IntGraph graph, PermutationGroup group) {
-    	setupConnectionTable(graph);
-    	super.setup(group, new GraphEquitablePartitionRefiner(graph, this));
+    	super.setup(group, new GraphEquitablePartitionRefiner(getRefinable(graph)));
     }
 
     public boolean isCanonical(IntGraph graph) {
@@ -139,80 +130,11 @@ public class GraphDiscretePartitionRefiner extends AbstractDiscretePartitionRefi
     
     @Override
     public int getVertexCount() {
-        return connectionTable.length;
+        return refinable.getVertexCount();
     }
     
-    private void setupConnectionTable(IntGraph graph) {
-    	int vertexCount = graph.getVertexCount();
-        connectionTable = new int[vertexCount][];
-        if (!ignoreEdgeColors) {
-            edgeColors = new int[vertexCount][];
-        }
-        for (int vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++) {
-        	List<Integer> connected = graph.getConnected(vertexIndex);
-            int numConnVertices = connected.size();
-            connectionTable[vertexIndex] = new int[numConnVertices];
-            if (!ignoreEdgeColors) {
-                edgeColors[vertexIndex] = new int[numConnVertices];
-            }
-            int i = 0;
-            for (int connectedVertex : connected) {
-                connectionTable[vertexIndex][i] = connectedVertex;
-                if (!ignoreEdgeColors) {
-                    int color = graph.getEdge(vertexIndex, connectedVertex).o;
-                    edgeColors[vertexIndex][i] = color;
-                }
-                i++;
-            }
-        }
-    }
-    
-    public Map<Integer, List<Integer>> makeCompactConnectionTable(IntGraph graph) {
-        List<List<Integer>> table = new ArrayList<List<Integer>>();
-        int tableIndex = 0;
-        int count = graph.getVertexCount();
-        int[] indexMap = new int[count];
-        for (int i = 0; i < count; i++) {
-            List<Integer> connected = graph.getConnected(i);
-            if (connected != null && connected.size() > 0) {
-                table.add(connected);
-                indexMap[i] = tableIndex;
-                tableIndex++;
-            }
-        }
-        Map<Integer, List<Integer>> shortTable =  new HashMap<Integer, List<Integer>>();
-        for (int i = 0; i < table.size(); i++) {
-            List<Integer> originalConnections = table.get(i);
-            List<Integer> mappedConnections = new ArrayList<Integer>();
-            for (int j : originalConnections) {
-                mappedConnections.add(indexMap[j]);
-            }
-            shortTable.put(i, mappedConnections);
-        }
-        return shortTable;
-    }
-
     @Override
     public int getConnectivity(int vertexI, int vertexJ) {
-    	 int indexInRow;
-         int maxRowIndex = connectionTable[vertexI].length;
-         for (indexInRow = 0; indexInRow < maxRowIndex; indexInRow++) {
-             if (connectionTable[vertexI][indexInRow] == vertexJ) {
-                 break;
-             }
-         }
-         if (ignoreEdgeColors) {
-             if (indexInRow < maxRowIndex) {
-                 return 1;
-             } else {
-                 return 0;
-             }
-         } else {
-             if (indexInRow < maxRowIndex) {
-                 return edgeColors[vertexI][indexInRow];
-             } else {
-                 return 0;
-             }
-         }
-     }
+    	return refinable.getConnectivity(vertexI, vertexJ);
+    }
 }

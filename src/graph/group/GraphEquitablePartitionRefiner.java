@@ -1,10 +1,12 @@
 package graph.group;
 
-import graph.model.IntGraph;
+import java.util.Set;
+
 import group.AbstractEquitablePartitionRefiner;
 import group.IEquitablePartitionRefiner;
-
-import java.util.Set;
+import group.Refinable;
+import group.invariant.IntegerInvariant;
+import group.invariant.Invariant;
 
 
 /**
@@ -16,29 +18,26 @@ import java.util.Set;
 public class GraphEquitablePartitionRefiner extends AbstractEquitablePartitionRefiner 
                                        implements IEquitablePartitionRefiner {
     
-    private IntGraph graph;
+    private final Refinable refinable;
     
-    private final GraphDiscretePartitionRefiner discreteRefiner;
-    
-    public GraphEquitablePartitionRefiner(IntGraph graph, GraphDiscretePartitionRefiner discreteRefiner) {
-        this.graph = graph;
-        this.discreteRefiner = discreteRefiner;
+    public GraphEquitablePartitionRefiner(Refinable refinable) {
+        this.refinable = refinable;
     }
 
     public int getNumberOfVertices() {
-        return graph.getVertexCount();
+        return refinable.getVertexCount();
     }
 
     @Override
-    public int neighboursInBlock(Set<Integer> block, int vertexIndex) {
+    public Invariant neighboursInBlock(Set<Integer> block, int vertexIndex) {
         int n = 0;
         
-        for (int i : discreteRefiner.getConnectedIndices(vertexIndex)) {
+        for (int i : refinable.getConnectedIndices(vertexIndex)) {
             if (block.contains(i)) {
                 n++;
             }
         }
-        return n;
+        return new IntegerInvariant(n);
     }
 
 }
